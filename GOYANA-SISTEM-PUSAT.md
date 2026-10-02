@@ -517,3 +517,57 @@ Pertanyaan pengguna: dapatkah repo dikerjakan juga dengan “cloud”. Jika maks
 - Dokumentasikan keputusan, status tugas, implementasi/pengujian dan hal belum selesai di repo; jangan menyatakan rencana sebagai fitur aktif.
 - Sebelum merge, review diff, selesaikan konflik, jalankan pemeriksaan yang relevan lalu integrasikan berurutan. Konflik tidak selesai otomatis hanya karena keduanya memakai GitHub.
 - Model lain tidak otomatis menerima akses repo atau credential produksi. Jangan menaruh secret/API key di handoff/repo.
+
+## 34. Dashboard Admin di HP dan Flutter Dimulai Sekarang
+
+Arahan lanjutan pengguna: desain dashboard konsisten, administrator dapat dipasang di HP, dan Flutter tidak perlu menunggu semua backend selesai.
+
+- Dashboard admin memakai tema coral/putih/abu Goyana, ukuran/tombol konsisten dan layout responsif. Data dan izin admin tetap terpisah dari owner.
+- Sediakan pemasangan PWA melalui browser yang mendukung setelah dashboard dihosting HTTPS. Manifest, ikon dan service worker tidak memberi akses tanpa login.
+- Jangan cache halaman/data pelanggan atau secret admin untuk membuat ilusi offline. Admin tetap memerlukan server untuk membaca kondisi terbaru dan menjalankan perubahan.
+- Flutter dapat dimulai bersama fondasi backend, menggunakan widget native dan API yang sama. Ini berbeda dari membungkus HTML dalam WebView.
+- Tahap awal Flutter: login owner dan pembacaan profil/paket/outlet, analisis/tes widget dan APK debug. Selanjutnya migrasikan operasional, role, offline, printer/kamera dan billing bertahap.
+- APK preview memiliki application ID tersendiri agar tidak menimpa prototype. APK debug bukan aplikasi final atau rilis Play Store.
+- Semua kode, keputusan dan status pengujian disimpan di repo. Tes CI berjalan di GitHub terpisah dari panggilan; jangan mengklaim agent terus bekerja tanpa batas setelah sesi tugas berhenti.
+
+
+## 35. Login Langsung dan Panduan Awal yang Bisa Dilewati
+
+Keputusan pengguna 2 Oktober 2026:
+- Login biasa langsung membuka beranda outlet yang memang diizinkan. Akun pusat usaha masuk ke outlet pusat; akun yang hanya punya satu outlet tidak ditanya memilih cabang.
+- Bila akun memiliki beberapa outlet yang diizinkan, gunakan outlet bawaan yang valid, tampilkan nama outlet dengan jelas, dan sediakan perpindahan berizin. Jangan mengharuskan pemilihan outlet setiap login atau memberi akses ke outlet lain.
+- Platform administrator tetap masuk ke dashboard administrator, terpisah dari beranda usaha.
+- Owner baru wajib mengisi nama outlet saat pendaftaran. Outlet pusat dibuat satu kali bersama akun/usaha; membuka kembali aplikasi tidak membuat outlet baru atau meminta nama ulang.
+- Akun pegawai/kurir yang diundang mengikuti outlet yang ditetapkan owner; tidak membuat usaha/outlet sendiri.
+- Setelah pendaftaran, sediakan panduan awal bertahap dengan desain coral/putih/abu yang konsisten: profil outlet, layanan dan harga, lalu printer opsional. Tampilkan langkah aktif, Lanjut, Kembali, dan Lewati.
+- Tombol Lewati hanya melewati panduan/pengaturan opsional, bukan identitas outlet wajib, autentikasi atau izin. Lewati membawa pengguna ke beranda.
+- Simpan kemajuan serta status selesai/dilewati per akun dan usaha, jangan menampilkan ulang pada setiap login. Panduan dapat dibuka kembali melalui Bantuan > Panduan awal.
+- Isian opsional yang belum selesai dapat dilengkapi di Pengaturan. Fitur yang bergantung pada isian itu menjelaskan kebutuhan pada saat digunakan.
+- Jangan menampilkan data contoh sebagai data usaha nyata atau menandai tahap selesai sebelum penyimpanan berhasil.
+- Pemeriksaan implementasi: daftar tanpa nama outlet ditolak; outlet dibuat satu kali; login langsung tanpa pemilih untuk satu outlet; akun undangan tidak membuat outlet; Lewati dan lanjut kembali mempertahankan data serta hak akses.
+
+Status: validasi nama usaha/outlet wajib dan pembuatan outlet pusat sudah ada pada registrasi web Laravel. Flutter saat ini baru login/profil; pendaftaran native, role pegawai dan panduan bertahap persisten belum diimplementasikan.
+
+
+## 36. Acuan Visual Terakhir dan Audit Tombol
+
+Koreksi pengguna: gunakan tema/desain HTML TERAKHIR yang disetujui, bukan HTML pertama dan bukan desain baru dari nol. Cocokkan versi sumber sebelum migrasi.
+- Pertahankan header, warna, tipografi, ikon, susunan kartu dan navigasi bawah pada versi terakhir saat dipindah ke Flutter; perubahan hanya untuk bug atau revisi yang diminta.
+- Audit tombol/menu secara menyeluruh: tujuan navigasi, aksi simpan, validasi, batal/kembali, ekspor, QR, printer dan hak akses.
+- Integrasi server yang belum tersedia harus menampilkan status jelas; jangan membuat sukses palsu.
+- Uji tampilan pada ukuran HP, teks panjang, keyboard, state kosong/loading/error dan status offline.
+- Catat setiap temuan serta hasil pengujian. Audit belum boleh disebut selesai hanya karena tombol mempunyai handler.
+
+
+## 37. Konsistensi Desain Web, Desktop, Tablet dan HP
+
+Arahan pengguna: web dan aplikasi HP memakai bahasa visual yang sama dari HTML terakhir yang disetujui. Jangan membuat identitas visual lain untuk Flutter.
+- Gunakan warna, font, ikon, bentuk tombol/kartu, nama menu dan status yang konsisten. Posisi/layout menyesuaikan ruang layar tanpa mengubah fungsi atau hak akses.
+- Layout desktop memanfaatkan lebar untuk tabel dan panel; tablet menyesuaikan kolom; HP memakai kartu/tabel adaptif tanpa overflow halaman.
+- Uji lebar 320, 360, 390, 412, 600, 768, 1024 dan 1440 piksel, portrait/landscape, pembesaran font, keyboard serta safe area.
+- Tombol mudah disentuh, teks panjang membungkus dengan baik, dialog dapat discroll dan aksi utama tetap terjangkau.
+- Bandingkan web dan Flutter per halaman. Jangan mengganti tema/konten hanya untuk menghindari penyesuaian responsif.
+- Uji navigasi, formulir dan status loading/kosong/error pada Android target serta browser desktop/tablet. Printer/kamera/scan wajib diuji di perangkat fisik yang relevan.
+- Target kompatibilitas ditetapkan dan diuji; jangan menjanjikan semua tipe HP tanpa batas atau mengklaim pengujian fisik yang belum dilakukan.
+
+Status: ketentuan disimpan sebagai kriteria penerimaan. Kesetaraan seluruh halaman Flutter/web dan matriks perangkat belum selesai diuji.
